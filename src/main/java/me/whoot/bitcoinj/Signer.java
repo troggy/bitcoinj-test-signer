@@ -3,18 +3,18 @@ package me.whoot.bitcoinj;
 import com.google.bitcoin.core.ECKey;
 import com.google.bitcoin.core.Sha256Hash;
 import com.google.bitcoin.crypto.DeterministicKey;
-import com.google.bitcoin.crypto.HDKeyDerivation;
+import com.google.bitcoin.wallet.DeterministicKeyChain;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.security.SecureRandom;
 
 @Path("/signer")
 public class Signer {
 
-    public static final String SEED = "legal winner thank year wave sausage worth useful legal winner thank year wave sausage worth useful legal winner thank year wave sausage worth title";
-    private static DeterministicKey key = HDKeyDerivation.createMasterPrivateKey(SEED.getBytes());
+    private static DeterministicKey key = new DeterministicKeyChain(new SecureRandom()).getWatchingKey();
 
     @GET
     @Path("/xpub")
